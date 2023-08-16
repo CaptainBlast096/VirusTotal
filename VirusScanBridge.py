@@ -14,8 +14,9 @@ apk_directory = r'C:\Users\jalee\PycharmProjects\APK'
 for filename in os.listdir(apk_directory):
     if filename.endswith('.apk'):
         apk_file_path = os.path.join(apk_directory, filename)
-
-        files = {'file' : (os.path.basename(apk_file_path), open(os.path.abspath(apk_file_path), 'rb'))}
-        with virusTotal.request(API_KEY) as virusTotal:
-            response = virusTotal.scan("files", files=files)
-            print(response.json())
+    # Will open the file and read it
+    with open(apk_directory, 'rb') as file:
+        files = {'file' : (os.path.basename(apk_directory), file)}
+        response = virusTotal.request("files", files=files)
+        # Print the responses
+        print(response.json())
